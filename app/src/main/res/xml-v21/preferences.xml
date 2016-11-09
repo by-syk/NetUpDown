@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:icon="@drawable/ic_hint"
+        android:summary="@string/preference_summary_hint" />
+
+    <PreferenceCategory android:title="@string/preference_category_settings">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="run"
+            android:summaryOff="@string/preference_summary_off_run"
+            android:summaryOn="@string/preference_summary_on_run"
+            android:title="@string/preference_title_run" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/preference_category_about">
+
+        <Preference
+            android:summary="@string/preference_summary_source"
+            android:title="@string/preference_title_source">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/preference_summary_source" />
+
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
