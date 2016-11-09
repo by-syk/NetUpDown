@@ -5,7 +5,7 @@
 
 ### Description
 
-**Upstream** is a small tool to show net speed as a floating window in real time.
+**Upstream** is a small tool to show net speed as floating window in real time.
 
 ![screenshot.png](screenshot.png)
 
@@ -24,10 +24,10 @@
 
 ### Donate
 
+If you like it, you could pay me a cup of coffee. Thank you.
+
 * Alipay: By_syk@163.com
 * PayPal: By_syk@163.com
-
-Thank you.
 
 
 *Copyright &#169; 2016 By_syk. All rights reserved.*
