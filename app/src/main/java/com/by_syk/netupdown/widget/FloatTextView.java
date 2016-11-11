@@ -21,9 +21,18 @@ public class FloatTextView extends TextView {
     private long lastTapTime = 0;
     private int tapTimes = 0;
 
-//    private boolean isMoving = false;
+    private boolean isMoving = false;
 
-//    private static final int TIME_LONG_PRESS = 2000;
+    private static final int TIME_LONG_PRESS = 1200;
+
+    private Runnable longPressRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (!isMoving && onMoveListener != null) {
+                onMoveListener.onLongPress();
+            }
+        }
+    };
 
     private OnMoveListener onMoveListener = null;
 
@@ -31,7 +40,7 @@ public class FloatTextView extends TextView {
         void onMove(int x, int y);
         void onDoubleTap();
         void onTripleTap();
-//        void onLongPress();
+        void onLongPress();
     }
 
     public void setOnMoveListener(OnMoveListener onMoveListener) {
@@ -58,7 +67,7 @@ public class FloatTextView extends TextView {
                 lastY = event.getRawY();
                 viewStartX = event.getX();
                 viewStartY = event.getY();
-//                isMoving = false;
+                isMoving = false;
                 long time = System.currentTimeMillis();
                 if (time - lastTapTime < 600) {
                     ++tapTimes;
@@ -72,6 +81,7 @@ public class FloatTextView extends TextView {
                 } else {
                     lastTapTime = time;
                     tapTimes = 1;
+                    postDelayed(longPressRunnable, TIME_LONG_PRESS);
                 }
                 break;
             }
@@ -79,7 +89,7 @@ public class FloatTextView extends TextView {
                 float x = event.getRawX();
                 float y = event.getRawY();
                 if (Math.abs(x - lastX) > 1 || Math.abs(y - lastY) > 1) {
-//                    isMoving = true;
+                    isMoving = true;
                     if (onMoveListener != null) {
                         onMoveListener.onMove((int) (x - viewStartX), (int) (y - viewStartY - offsetY));
                     }
@@ -88,16 +98,8 @@ public class FloatTextView extends TextView {
                 lastY = y;
                 break;
             }
-//            case MotionEvent.ACTION_UP: {
-//                if (!isMoving) {
-//                    long time = System.currentTimeMillis();
-//                    if (time - lastTapTime > TIME_LONG_PRESS) {
-//                        if (onMoveListener != null) {
-//                            onMoveListener.onLongPress();
-//                        }
-//                    }
-//                }
-//            }
+            case MotionEvent.ACTION_UP:
+                removeCallbacks(longPressRunnable);
         }
         return true;
     }

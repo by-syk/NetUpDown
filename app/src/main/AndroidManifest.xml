@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
 
     <application
         android:allowBackup="true"
@@ -43,7 +44,8 @@
         <service
             android:name=".service.NetTrafficService"
             android:label="@string/service"
-            android:description="@string/service_desc" />
+            android:description="@string/service_desc"
+            android:process=":service" />
 
         <receiver android:name=".receiver.BootReceiver">
             <intent-filter>

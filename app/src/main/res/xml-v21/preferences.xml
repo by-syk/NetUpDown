@@ -28,6 +28,15 @@
 
         </Preference>
 
+        <!--<Preference
+            android:summary="@string/preference_summary_special"
+            android:title="@string/preference_title_special" />
+
+        <Preference
+            android:key="copyright"
+            android:summary="@string/copyright"
+            android:title="@string/preference_title_copyright" />-->
+
     </PreferenceCategory>
 
 </PreferenceScreen>

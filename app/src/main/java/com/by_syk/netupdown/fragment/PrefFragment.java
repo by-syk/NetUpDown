@@ -119,11 +119,11 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
     }
 
     private void runService() {
-        getActivity().startService(new Intent(getActivity(), NetTrafficService.class));
+        getActivity().startService(new Intent(getActivity().getApplicationContext(), NetTrafficService.class));
     }
 
     private void stopService() {
-        getActivity().stopService(new Intent(getActivity(), NetTrafficService.class));
+        getActivity().stopService(new Intent(getActivity().getApplicationContext(), NetTrafficService.class));
     }
 
     @TargetApi(23)

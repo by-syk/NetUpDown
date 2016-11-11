@@ -1,5 +1,9 @@
+v1.0.2 2016-11-11
+- Add haptic feedback.
+- Long press to switch
+
 v1.0.1 2016-11-11
 - Remember the position and mode.
 
-v1.0.0
+v1.0.0 2016-11-10
 - First release.

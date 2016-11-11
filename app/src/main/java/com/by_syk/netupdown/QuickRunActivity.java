@@ -23,7 +23,7 @@ public class QuickRunActivity extends Activity {
             if (!NetTrafficService.isRunning) {
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
                 sp.edit().putBoolean("run", true).commit();
-                startService(new Intent(this, NetTrafficService.class));
+                startService(new Intent(getApplicationContext(), NetTrafficService.class));
             }
         }
 

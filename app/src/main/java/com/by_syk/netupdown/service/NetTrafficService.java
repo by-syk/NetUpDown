@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.view.Gravity;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
 
@@ -36,7 +37,7 @@ public class NetTrafficService extends Service {
 
     private static final int MODE_SPEED = 0;
     private static final int MODE_FLOW = 1;
-    private static int mode = MODE_SPEED;
+    private int mode = MODE_SPEED;
 
     public static boolean isRunning = false;
 
@@ -51,8 +52,6 @@ public class NetTrafficService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-//        Log.d(C.LOG_TAG, "NetTrafficService - onCreate");
 
         isRunning = true;
 
@@ -73,8 +72,6 @@ public class NetTrafficService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        Log.d(C.LOG_TAG, "NetTrafficService - onStartCommand");
-
         return START_STICKY;
     }
 
@@ -88,7 +85,8 @@ public class NetTrafficService extends Service {
 
         windowManager.removeView(tvSpeed);
 
-        sp.put("x", layoutParams.x).put("y", layoutParams.y).put("mode", mode).save();
+        sp.put("x", layoutParams.x).put("y", layoutParams.y)
+                .put("mode", mode).put("window", layoutParams.type).save();
 
         unregisterReceiver(screenReceiver);
 
@@ -104,24 +102,8 @@ public class NetTrafficService extends Service {
     }
 
     private void initView() {
-        windowManager = (WindowManager) getApplication().getSystemService(WINDOW_SERVICE);
-
-        layoutParams = new WindowManager.LayoutParams();
-        layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        layoutParams.gravity = Gravity.START | Gravity.TOP;
-        layoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
-//        layoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
-//        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        layoutParams.format = PixelFormat.TRANSLUCENT;
-        layoutParams.x = sp.getInt("x");
-        layoutParams.y = sp.getInt("y");
-
         tvSpeed = (FloatTextView) LayoutInflater.from(getApplicationContext())
                 .inflate(R.layout.view_window, null);
-//        tvSpeed.setOffsetY(ExtraUtil.getStatusHeight(this));
         tvSpeed.setOnMoveListener(new FloatTextView.OnMoveListener() {
             @Override
             public void onMove(int x, int y) {
@@ -132,22 +114,34 @@ public class NetTrafficService extends Service {
 
             @Override
             public void onDoubleTap() {
-                if (mode == MODE_SPEED) {
-                    netTrafficSpider.resetUsedBytes();
-                    netTrafficSpider.setRefreshPeriod(2000);
-                    mode = MODE_FLOW;
-                } else {
-                    netTrafficSpider.setRefreshPeriod(1500);
-                    mode = MODE_SPEED;
-                }
+                switchMode();
+                vibrate(false);
             }
 
             @Override
             public void onTripleTap() {
+                vibrate(true);
                 stopSelf();
+            }
+
+            @Override
+            public void onLongPress() {
+                vibrate(true);
+                switchWindow(layoutParams.type, true);
             }
         });
 
+        layoutParams = new WindowManager.LayoutParams();
+        layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        layoutParams.gravity = Gravity.START | Gravity.TOP;
+        layoutParams.format = PixelFormat.TRANSLUCENT;
+        layoutParams.x = sp.getInt("x");
+        layoutParams.y = sp.getInt("y");
+
+        switchWindow(sp.getInt("window", WindowManager.LayoutParams.TYPE_SYSTEM_ERROR), false);
+
+        windowManager = (WindowManager) getApplication().getSystemService(WINDOW_SERVICE);
         windowManager.addView(tvSpeed, layoutParams);
     }
 
@@ -169,6 +163,7 @@ public class NetTrafficService extends Service {
 //                Log.d(C.LOG_TAG, "NetTrafficSpider.Callback onUpdate: " + readableNetSpeed);
                 if (mode == MODE_SPEED) {
                     text = readableNetSpeedUp;
+//                    text = readableNetSpeedUp + " | " + readableNetSpeedDown;
                 } else {
                     text = readableUsedBytes;
                 }
@@ -184,6 +179,58 @@ public class NetTrafficService extends Service {
             public void afterStop() {}
         });
         netTrafficSpider.start();
+    }
+
+    private void switchMode() {
+        if (mode == MODE_SPEED) {
+            netTrafficSpider.resetUsedBytes();
+            netTrafficSpider.setRefreshPeriod(2000);
+            mode = MODE_FLOW;
+        } else {
+            netTrafficSpider.setRefreshPeriod(1500);
+            mode = MODE_SPEED;
+        }
+    }
+
+    private void switchWindow(int curWindow, boolean execute) {
+        if (execute) {
+            // TYPE_SYSTEM_ALERT / TYPE_TOAST
+            curWindow = curWindow == WindowManager.LayoutParams.TYPE_SYSTEM_ERROR
+                    ? WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
+                    : WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
+        }
+
+        if (curWindow == WindowManager.LayoutParams.TYPE_SYSTEM_ALERT) {
+            layoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+            layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+            tvSpeed.setOffsetY(ExtraUtil.getStatusHeight(this));
+        } else {
+            layoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
+            layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                    | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+            tvSpeed.setOffsetY(0);
+        }
+
+        if (execute) {
+//            windowManager.updateViewLayout(tvSpeed, layoutParams);
+            windowManager.removeView(tvSpeed);
+            windowManager.addView(tvSpeed, layoutParams);
+        }
+    }
+
+    private void vibrate(boolean immediately) {
+        if (immediately) {
+            tvSpeed.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
+                    HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+        } else {
+            tvSpeed.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tvSpeed.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
+                            HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                }
+            }, 200);
+        }
     }
 
     class ScreenReceiver extends BroadcastReceiver {
