@@ -1,4 +1,4 @@
-v1.0.2 2016-11-11
+v1.0.3 2016-11-11
 - Add haptic feedback.
 - Long press to switch window priority.
 

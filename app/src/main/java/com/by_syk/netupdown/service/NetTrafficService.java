@@ -162,7 +162,7 @@ public class NetTrafficService extends Service {
                 }
 //                Log.d(C.LOG_TAG, "NetTrafficSpider.Callback onUpdate: " + readableNetSpeed);
                 if (mode == MODE_SPEED) {
-                    text = readableNetSpeedUp;
+                    text = readableNetSpeed;
 //                    text = readableNetSpeedUp + " | " + readableNetSpeedDown;
                 } else {
                     text = readableUsedBytes;
@@ -190,6 +190,7 @@ public class NetTrafficService extends Service {
             netTrafficSpider.setRefreshPeriod(1500);
             mode = MODE_SPEED;
         }
+        tvSpeed.setText(getString(R.string.app_name));
     }
 
     private void switchWindow(int curWindow, boolean execute) {
