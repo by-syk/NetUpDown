@@ -16,6 +16,8 @@ public class FloatTextView extends TextView {
     private float viewStartX = 0;
     private float viewStartY = 0;
 
+    private float offsetY = 0;
+
     private long lastTapTime = 0;
     private int tapTimes = 0;
 
@@ -42,6 +44,10 @@ public class FloatTextView extends TextView {
 
     public FloatTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public void setOffsetY(float offset) {
+        offsetY = offset;
     }
 
     @Override
@@ -75,7 +81,7 @@ public class FloatTextView extends TextView {
                 if (Math.abs(x - lastX) > 1 || Math.abs(y - lastY) > 1) {
 //                    isMoving = true;
                     if (onMoveListener != null) {
-                        onMoveListener.onMove((int) (x - viewStartX), (int) (y - viewStartY));
+                        onMoveListener.onMove((int) (x - viewStartX), (int) (y - viewStartY - offsetY));
                     }
                 }
                 lastX = x;

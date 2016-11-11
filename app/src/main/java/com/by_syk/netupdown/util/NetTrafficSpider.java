@@ -2,7 +2,6 @@ package com.by_syk.netupdown.util;
 
 import android.net.TrafficStats;
 import android.os.SystemClock;
-import android.util.Log;
 
 /**
  * Created by By_syk on 2016-10-20.

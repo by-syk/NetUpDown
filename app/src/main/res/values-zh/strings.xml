@@ -13,7 +13,7 @@
     <string name="preference_summary_on_run">实时计速服务已启动并已显示悬浮窗</string>
     <string name="preference_summary_off_run">实时计速服务未启动</string>
     <string name="preference_category_about">关于</string>
-    <string name="preference_title_source">源码</string>
+    <string name="preference_title_source">开放源代码</string>
 
     <string name="run_shortcut_short_label">运行上行速</string>
     <string name="run_shortcut_long_label">立即运行上行速</string>

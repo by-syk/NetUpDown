@@ -7,13 +7,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
 
+import com.by_syk.lib.storage.SP;
 import com.by_syk.netupdown.R;
-import com.by_syk.netupdown.util.C;
+import com.by_syk.netupdown.util.ExtraUtil;
 import com.by_syk.netupdown.util.NetTrafficSpider;
 import com.by_syk.netupdown.widget.FloatTextView;
 
@@ -26,6 +26,8 @@ public class NetTrafficService extends Service {
     private WindowManager.LayoutParams layoutParams;
     private FloatTextView tvSpeed;
 
+    private SP sp;
+
     private NetTrafficSpider netTrafficSpider = NetTrafficSpider.getInstance();
 
     private ScreenReceiver screenReceiver;
@@ -36,19 +38,25 @@ public class NetTrafficService extends Service {
     private static final int MODE_FLOW = 1;
     private static int mode = MODE_SPEED;
 
-    private static int x = 0;
-    private static int y = -1;
-
     public static boolean isRunning = false;
 
     public static final String ACTION_SERVICE_RUN = "com.by_syk.netupdown.ACTION_SERVICE_RUN";
     public static final String ACTION_SERVICE_DIED = "com.by_syk.netupdown.ACTION_SERVICE_DIED";
 
     @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
 
+//        Log.d(C.LOG_TAG, "NetTrafficService - onCreate");
+
         isRunning = true;
+
+        init();
 
         initView();
 
@@ -64,8 +72,10 @@ public class NetTrafficService extends Service {
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    public int onStartCommand(Intent intent, int flags, int startId) {
+//        Log.d(C.LOG_TAG, "NetTrafficService - onStartCommand");
+
+        return START_STICKY;
     }
 
     @Override
@@ -78,12 +88,19 @@ public class NetTrafficService extends Service {
 
         windowManager.removeView(tvSpeed);
 
-        x = layoutParams.x;
-        y = layoutParams.y;
+        sp.put("x", layoutParams.x).put("y", layoutParams.y).put("mode", mode).save();
 
         unregisterReceiver(screenReceiver);
 
         sendBroadcast(new Intent(ACTION_SERVICE_DIED));
+    }
+
+    private void init() {
+        sp = new SP(this, false);
+        mode = sp.getInt("mode", MODE_SPEED);
+        if (!sp.contains("y")) {
+            sp.save("y", ExtraUtil.getStatusHeight(this));
+        }
     }
 
     private void initView() {
@@ -96,15 +113,15 @@ public class NetTrafficService extends Service {
         layoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
         layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+//        layoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
+//        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         layoutParams.format = PixelFormat.TRANSLUCENT;
-        layoutParams.x = x;
-        if (y < 0) {
-            y = (int) (getResources().getDisplayMetrics().density * 25);
-        }
-        layoutParams.y = y;
+        layoutParams.x = sp.getInt("x");
+        layoutParams.y = sp.getInt("y");
 
         tvSpeed = (FloatTextView) LayoutInflater.from(getApplicationContext())
                 .inflate(R.layout.view_window, null);
+//        tvSpeed.setOffsetY(ExtraUtil.getStatusHeight(this));
         tvSpeed.setOnMoveListener(new FloatTextView.OnMoveListener() {
             @Override
             public void onMove(int x, int y) {
@@ -138,6 +155,8 @@ public class NetTrafficService extends Service {
         netTrafficSpider.reset();
         netTrafficSpider.setRefreshPeriod(1500);
         netTrafficSpider.setCallback(new NetTrafficSpider.Callback() {
+            private String text;
+
             @Override
             public void beforeStart() {}
 
@@ -147,17 +166,16 @@ public class NetTrafficService extends Service {
                 if (isSleep) {
                     return;
                 }
-                Log.d(C.LOG_TAG, "NetTrafficSpider.Callback onUpdate: " + readableNetSpeed);
-                final String TEXT;
+//                Log.d(C.LOG_TAG, "NetTrafficSpider.Callback onUpdate: " + readableNetSpeed);
                 if (mode == MODE_SPEED) {
-                    TEXT = readableNetSpeed;
+                    text = readableNetSpeedUp;
                 } else {
-                    TEXT = readableUsedBytes;
+                    text = readableUsedBytes;
                 }
                 tvSpeed.post(new Runnable() {
                     @Override
                     public void run() {
-                        tvSpeed.setText(TEXT);
+                        tvSpeed.setText(text);
                     }
                 });
             }

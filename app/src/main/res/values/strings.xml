@@ -15,7 +15,7 @@
     <string name="preference_summary_on_run">The service is running and a floating window is shown.</string>
     <string name="preference_summary_off_run">The service is NOT running.</string>
     <string name="preference_category_about">About</string>
-    <string name="preference_title_source">Source</string>
+    <string name="preference_title_source">Open source</string>
     <string name="preference_summary_source" translatable="false">https://github.com/by-syk/NetUpDown</string>
 
     <string name="run_shortcut_short_label">Run Upstream</string>
