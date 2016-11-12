@@ -1,3 +1,6 @@
+v1.0.4 2016-11-12
+- Support Android 7.0's Quick Settings and 7.1's App Shortcuts.
+
 v1.0.3 2016-11-11
 - Add haptic feedback.
 - Long press to switch window priority.

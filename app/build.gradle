@@ -8,8 +8,8 @@ android {
         applicationId "com.by_syk.netupdown"
         minSdkVersion 8
         targetSdkVersion 25
-        versionCode 161111060
-        versionName "1.0.3"
+        versionCode 161112000
+        versionName "1.0.4"
 
         vectorDrawables.generatedDensities = ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi']
     }
