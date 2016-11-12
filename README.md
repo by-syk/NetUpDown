@@ -2,7 +2,7 @@
 
 # Upstream - Net speed floating window
 
-By_syk
+
 ### Description
 
 **Upstream** is a small tool to show net speed as floating window in real time.
