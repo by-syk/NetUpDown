@@ -1,4 +1,4 @@
-![icon.png](icon.png)
+![icon.png](art/icon.png)
 
 # Upstream - Net speed floating window
 
@@ -7,7 +7,7 @@
 
 **Upstream** is a small tool to show net speed as floating window in real time.
 
-![screenshot.png](screenshot.png)
+![screenshot.png](art/screenshot.png)
 
 
 ### Download
