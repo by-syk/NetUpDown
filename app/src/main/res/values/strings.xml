@@ -25,8 +25,8 @@
     <string name="service_desc">For monitoring net speed in real time.</string>
 
     <string name="preference_title_hint">TIPS</string>
-    <string name="preference_summary_hint">This is a small tool to show net speed in real time. DOUBLE TAP to switch speed/flow mode, and TRIPLE TAP to close.</string>
-    <!--<string name="preference_summary_hint">This is a small tool to show net speed in real time. DOUBLE TAP to switch speed/flow mode, TRIPLE TAP to close, and LONG PRESS to switch high-priority/low-priority mode.</string>-->
+    <string name="preference_summary_hint">This is a small tool to show net speed in real time. DOUBLE TAP to switch speed/flow mode, and TRIPLE TAP to hide.</string>
+    <!--<string name="preference_summary_hint">This is a small tool to show net speed in real time. DOUBLE TAP to switch speed/flow mode, TRIPLE TAP to hide, and LONG PRESS to switch high-priority/low-priority mode.</string>-->
     <string name="preference_category_settings">Settings</string>
     <string name="preference_title_run">Run</string>
     <string name="preference_summary_on_run">The service is running and a floating window is shown.</string>

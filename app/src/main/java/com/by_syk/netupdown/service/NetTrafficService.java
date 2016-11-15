@@ -88,25 +88,34 @@ public class NetTrafficService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent != null) {
+            if (mode == MODE_FLOW) {
+                sp.save("startTotalBytes", netTrafficSpider.getStartTotalBytes());
+            }
+        } else { // Auto restart
+            if (mode == MODE_FLOW) {
+                netTrafficSpider.setStartTotalBytes(sp.getLong("startTotalBytes", Long.MAX_VALUE));
+            }
+        }
+
+        // If the service's process is killed while it is started,
+        // later the system will try to re-create the service.
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-
         isRunning = false;
 
         netTrafficSpider.stop();
 
         windowManager.removeView(tvSpeed);
 
-        sp.put("x", layoutParams.x).put("y", layoutParams.y)
-                .put("mode", mode).put("window", layoutParams.type).save();
-
         unregisterReceiver(screenReceiver);
 
         sendBroadcast(new Intent(ACTION_SERVICE_DIED));
+
+        super.onDestroy();
     }
 
     private void init() {
@@ -126,23 +135,25 @@ public class NetTrafficService extends Service {
                 layoutParams.x = x;
                 layoutParams.y = y;
                 windowManager.updateViewLayout(tvSpeed, layoutParams);
+
+                sp.put("x", x).put("y", y).save();
             }
 
             @Override
             public void onDoubleTap() {
                 switchMode();
-                vibrate(false);
+                touchFeedback();
             }
 
             @Override
             public void onTripleTap() {
-                vibrate(true);
+                touchFeedback();
                 stopSelf();
             }
 
             @Override
             public void onLongPress() {
-                vibrate(true);
+                touchFeedback();
                 switchWindow(layoutParams.type, true);
             }
         });
@@ -173,7 +184,7 @@ public class NetTrafficService extends Service {
             @Override
             public void onUpdate(long netSpeed, long netSpeedUp, long netSpeedDown, long usedBytes,
                                  String readableNetSpeed, String readableNetSpeedUp, String readableNetSpeedDown, String readableUsedBytes) {
-                if (isSleep) {
+                if (isSleep) { // Do not update view when screen is off.
                     return;
                 }
 //                Log.d(C.LOG_TAG, "NetTrafficSpider.Callback onUpdate: " + readableNetSpeed);
@@ -202,10 +213,14 @@ public class NetTrafficService extends Service {
             netTrafficSpider.resetUsedBytes();
             netTrafficSpider.setRefreshPeriod(2000);
             mode = MODE_FLOW;
+
+            sp.put("startTotalBytes", netTrafficSpider.getStartTotalBytes());
         } else {
             netTrafficSpider.setRefreshPeriod(1500);
             mode = MODE_SPEED;
         }
+        sp.put("mode", mode).save();
+
         tvSpeed.setText(getString(R.string.app_name));
     }
 
@@ -228,6 +243,8 @@ public class NetTrafficService extends Service {
             tvSpeed.setOffsetY(0);
         }
 
+        sp.save("window", curWindow);
+
         if (execute) {
 //            windowManager.updateViewLayout(tvSpeed, layoutParams);
             windowManager.removeView(tvSpeed);
@@ -235,19 +252,9 @@ public class NetTrafficService extends Service {
         }
     }
 
-    private void vibrate(boolean immediately) {
-        if (immediately) {
-            tvSpeed.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
-                    HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
-        } else {
-            tvSpeed.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    tvSpeed.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
-                            HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
-                }
-            }, 200);
-        }
+    private void touchFeedback() {
+        tvSpeed.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
+                HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
     }
 
     class ScreenReceiver extends BroadcastReceiver {

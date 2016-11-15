@@ -62,7 +62,7 @@ public class NetTrafficSpider {
 
         if (thread == null) {
             thread = new Thread(new MyThread());
-            //thread.setDaemon(true);
+            thread.setDaemon(true);
             thread.start();
         }
     }
@@ -79,6 +79,16 @@ public class NetTrafficSpider {
         lastTotalRxBytes = TrafficStats.UNSUPPORTED;
         refreshPeriod = 1000;
         reqStop = false;
+    }
+
+    public long getStartTotalBytes() {
+        return startTotalBytes;
+    }
+
+    public void setStartTotalBytes(long startTotalBytes) {
+        if (startTotalBytes < TrafficStats.getTotalRxBytes() + TrafficStats.getTotalTxBytes()) {
+            this.startTotalBytes = startTotalBytes;
+        }
     }
 
     public void resetUsedBytes() {

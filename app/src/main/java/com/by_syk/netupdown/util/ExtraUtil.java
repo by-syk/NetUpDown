@@ -17,9 +17,6 @@
 package com.by_syk.netupdown.util;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.util.Log;
 
 import java.util.Locale;
 
@@ -56,44 +53,45 @@ public class ExtraUtil {
         try {
             Class clazz = Class.forName("com.android.internal.R$dimen");
             Object object = clazz.newInstance();
-            int height = Integer.parseInt(clazz.getField("status_bar_height").get(object).toString());
-            height = context.getResources().getDimensionPixelSize(height);
-            Log.d(C.LOG_TAG, "getStatusHeight1 " + height);
-            return height;
+            int id = Integer.parseInt(clazz.getField("status_bar_height").get(object).toString());
+            return context.getResources().getDimensionPixelSize(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        int height = (int) context.getResources().getDisplayMetrics().density * 25;
-        Log.d(C.LOG_TAG, "getStatusHeight2 " + height);
-        return height;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId != 0) {
+            return context.getResources().getDimensionPixelSize(resourceId);
+        }
+
+        return (int) context.getResources().getDisplayMetrics().density * 25;
     }
 
-    public static boolean isNetworkConnected(Context context, boolean isWifiOnly) {
-        if (context == null) {
-            return false;
-        }
-
-        ConnectivityManager connectivityManager = (ConnectivityManager)
-                context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager == null) {
-            return false;
-        }
-
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo == null) {
-            return false;
-        }
-
-        boolean is_connected = networkInfo.isAvailable();
-        if (isWifiOnly) {
-            is_connected &= networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
-        }
-
-        return is_connected;
-    }
-
-    public static boolean isNetworkConnected(Context context) {
-        return isNetworkConnected(context, false);
-    }
+//    public static boolean isNetworkConnected(Context context, boolean isWifiOnly) {
+//        if (context == null) {
+//            return false;
+//        }
+//
+//        ConnectivityManager connectivityManager = (ConnectivityManager)
+//                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        if (connectivityManager == null) {
+//            return false;
+//        }
+//
+//        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+//        if (networkInfo == null) {
+//            return false;
+//        }
+//
+//        boolean is_connected = networkInfo.isAvailable();
+//        if (isWifiOnly) {
+//            is_connected &= networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+//        }
+//
+//        return is_connected;
+//    }
+//
+//    public static boolean isNetworkConnected(Context context) {
+//        return isNetworkConnected(context, false);
+//    }
 }

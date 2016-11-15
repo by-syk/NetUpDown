@@ -23,8 +23,8 @@
     <string name="service_desc">实时计算网速并显示在悬浮窗上</string>
 
     <string name="preference_title_hint">TIPS</string>
-    <string name="preference_summary_hint">这是一款实时显示网速的悬浮窗小工具。双击切换网速/流量模式，三连击关闭。</string>
-    <!--<string name="preference_summary_hint">这是一款实时显示网速的悬浮窗小工具。双击切换网速/流量模式，三连击关闭；长按切换高/低优先级模式。</string>-->
+    <string name="preference_summary_hint">这是一款实时显示网速的悬浮窗小工具。双击切换网速/流量模式，三连击隐藏。</string>
+    <!--<string name="preference_summary_hint">这是一款实时显示网速的悬浮窗小工具。双击切换网速/流量模式，三连击隐藏；长按切换高/低优先级模式。</string>-->
     <string name="preference_category_settings">设置</string>
     <string name="preference_title_run">运行</string>
     <string name="preference_summary_on_run">实时计速服务已启动并已显示悬浮窗</string>

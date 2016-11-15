@@ -46,14 +46,10 @@ public class QSTileService extends TileService {
     public void onStartListening() {
         super.onStartListening();
 
-        Tile tile = getQsTile();
-        if (tile != null) {
-            if (NetTrafficService.isRunning) {
-                tile.setState(Tile.STATE_ACTIVE);
-            } else {
-                tile.setState(Tile.STATE_INACTIVE);
-            }
-            tile.updateTile();
+        if (NetTrafficService.isRunning) {
+            switchState(true);
+        } else {
+            switchState(false);
         }
     }
 
@@ -70,24 +66,29 @@ public class QSTileService extends TileService {
             return;
         }
 
-        Tile tile = getQsTile();
-
         if (!NetTrafficService.isRunning) {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             sp.edit().putBoolean("run", true).commit();
             startService(new Intent(getApplicationContext(), NetTrafficService.class));
 
-            if (tile != null) {
-                tile.setState(Tile.STATE_ACTIVE);
-                tile.updateTile();
-            }
+            switchState(true);
         } else {
             stopService(new Intent(getApplicationContext(), NetTrafficService.class));
 
-            if (tile != null) {
+            switchState(false);
+        }
+    }
+
+    private void switchState(boolean isActive) {
+        Tile tile = getQsTile();
+        if (tile != null) {
+            if (isActive) {
+                tile.setState(Tile.STATE_ACTIVE);
+            } else {
                 tile.setState(Tile.STATE_INACTIVE);
-                tile.updateTile();
             }
+
+            tile.updateTile();
         }
     }
 }

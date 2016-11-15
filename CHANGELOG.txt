@@ -1,3 +1,8 @@
+v1.1.0 2016-11-15
+- Fix: TRIPLE TAP causes DOUBLE TAP to execute.
+- Fix: Position of window changes.
+- Restore flow data while restarting.
+
 v1.0.4 2016-11-12
 - Support Android 7.0's Quick Settings and 7.1's App Shortcuts.
 

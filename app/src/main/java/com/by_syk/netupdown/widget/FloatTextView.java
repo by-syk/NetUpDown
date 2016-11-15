@@ -41,6 +41,15 @@ public class FloatTextView extends TextView {
 
     private static final int TIME_LONG_PRESS = 1200;
 
+    private Runnable doubleTapRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (!isMoving && onMoveListener != null) {
+                onMoveListener.onDoubleTap();
+            }
+        }
+    };
+
     private Runnable longPressRunnable = new Runnable() {
         @Override
         public void run() {
@@ -87,10 +96,11 @@ public class FloatTextView extends TextView {
                 long time = System.currentTimeMillis();
                 if (time - lastTapTime < 600) {
                     ++tapTimes;
-                    if (onMoveListener != null) {
-                        if (tapTimes == 2) {
-                            onMoveListener.onDoubleTap();
-                        } else if (tapTimes == 3) {
+                    if (tapTimes == 2) {
+                        postDelayed(doubleTapRunnable, 600);
+                    } else if (tapTimes == 3) {
+                        removeCallbacks(doubleTapRunnable);
+                        if (onMoveListener != null) {
                             onMoveListener.onTripleTap();
                         }
                     }
