@@ -38,8 +38,15 @@
     <!--<string name="preference_summary_special">For @</string>-->
     <!--<string name="preference_title_copyright">Copyright</string>-->
 
+    <string name="dia_bt_high_priority">Yes</string>
+    <string name="dia_bt_low_priority">No</string>
+
     <string name="run_shortcut_short_label">Run Upstream</string>
     <string name="run_shortcut_long_label">Run Upstream</string>
+    <string name="priority_desc">
+"Do you need the floating window to be dragged to the status bar?
+\nTIPS: If yes, high priority will be granted to the floating window. It may cause some video players unable to adjust brightness.
+Well, you could also toggle the option at any time by pressing and holding the floating window."</string>
 
     <string name="tile_run">Run Upstream</string>
 

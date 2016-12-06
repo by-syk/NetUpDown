@@ -36,6 +36,9 @@ public class NetTrafficSpider {
     private int netSpeedUp = 0;
     private int netSpeedDown = 0;
 
+//    private int[] recentBytes = new int[16];
+//    private int recentIndex = 0;
+
     private int refreshPeriod = 1000;
 
     private Thread thread = null;
@@ -170,6 +173,7 @@ public class NetTrafficSpider {
 
                 total = lastTotalTxBytes + lastTotalRxBytes;
                 netSpeed = (int) ((total - lastTotalBytes) * 1000 / refreshPeriod);
+//                recentBytes[(++recentIndex) % recentBytes.length] = (int) (total - lastTotalBytes);
                 lastTotalBytes = total;
 
                 usedBytes = lastTotalBytes - startTotalBytes;
@@ -184,6 +188,20 @@ public class NetTrafficSpider {
             }
         }
     }
+
+//    private float getStandardDeviation(int[] arr) {
+//        float sum = 0; // byte
+//        for (int a : arr) {
+//            sum += a;
+//        }
+//        float average = sum / arr.length;
+//        sum = 0; // kb
+//        for (int a : arr) {
+//            sum += (a - average) * (a - average) / (1024 * 1024);
+//        }
+//        average = (float) Math.sqrt(sum / arr.length);
+//        return average;
+//    }
 
     public interface Callback {
         void beforeStart();

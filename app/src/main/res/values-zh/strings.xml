@@ -35,8 +35,14 @@
     <!--<string name="preference_summary_special">为 @ 定制</string>-->
     <!--<string name="preference_title_copyright">版权所有</string>-->
 
+    <string name="dia_bt_high_priority">需要</string>
+    <string name="dia_bt_low_priority">不需要</string>
+
     <string name="run_shortcut_short_label">网速悬浮窗</string>
     <string name="run_shortcut_long_label">显示网速悬浮窗</string>
+    <string name="priority_desc">
+"是否需要采用高优先级模式以允许悬浮窗能被拖动到状态栏？
+\n提示：允许拖动到状态栏可能带来一些问题，比如造成某些视频播放器无法调节亮度。不过您也可以随时长按悬浮窗来切换这一设置。"</string>
 
     <string name="tile_run">网速悬浮窗</string>
 

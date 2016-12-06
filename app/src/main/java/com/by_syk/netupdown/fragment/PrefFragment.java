@@ -17,8 +17,10 @@
 package com.by_syk.netupdown.fragment;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
@@ -28,7 +30,9 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
+import android.view.WindowManager;
 
+import com.by_syk.lib.storage.SP;
 import com.by_syk.netupdown.R;
 import com.by_syk.netupdown.service.NetTrafficService;
 import com.by_syk.netupdown.util.C;
@@ -39,6 +43,8 @@ import com.by_syk.netupdown.util.C;
 
 @TargetApi(11)
 public class PrefFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
+    private SP sp;
+
     private SwitchPreference switchPreference;
     private CheckBoxPreference checkBoxPreference;
 
@@ -66,6 +72,8 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
         findPreference("run").setOnPreferenceChangeListener(this);
 
         serviceReceiver = new ServiceReceiver();
+
+        sp = new SP(getActivity(), false);
     }
 
     @Override
@@ -99,7 +107,11 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
                 if (isChecked) {
                     if (!NetTrafficService.isRunning) {
                         if (canDrawOverlays()) {
-                            runService();
+                            if (!sp.getBoolean("priorityHint")) {
+                                hintPriorityDialog();
+                            } else {
+                                runService();
+                            }
                         } else { // No permission
                             requestDrawOverLays();
                         }
@@ -153,6 +165,29 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:" + getActivity().getPackageName()));
         startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
+    }
+
+    private void hintPriorityDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                .setMessage(R.string.priority_desc)
+                .setPositiveButton(R.string.dia_bt_high_priority, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        sp.put("window", WindowManager.LayoutParams.TYPE_SYSTEM_ERROR)
+                                .put("priorityHint", true).save();
+                        runService();
+                    }
+                })
+                .setNegativeButton(R.string.dia_bt_low_priority, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        sp.put("window", WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
+                                .put("priorityHint", true).save();
+                        runService();
+                    }
+                })
+                .create();
+        alertDialog.show();
     }
 
     @TargetApi(23)

@@ -1,3 +1,6 @@
+v1.1.1 2016-12-06
+- Long press to switch window priority.
+
 v1.1.0 2016-11-15
 - Fix: TRIPLE TAP causes DOUBLE TAP to execute.
 - Fix: Position of window changes.

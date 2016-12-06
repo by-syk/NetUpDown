@@ -190,6 +190,7 @@ public class NetTrafficService extends Service {
 //                Log.d(C.LOG_TAG, "NetTrafficSpider.Callback onUpdate: " + readableNetSpeed);
                 if (mode == MODE_SPEED) {
                     text = readableNetSpeed;
+//                    text = "σ" + (int) variance + " " + readableNetSpeed;
 //                    text = readableNetSpeedUp + " | " + readableNetSpeedDown;
                 } else {
                     text = readableUsedBytes;

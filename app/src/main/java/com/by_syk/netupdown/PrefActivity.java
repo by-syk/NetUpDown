@@ -16,15 +16,19 @@
 
 package com.by_syk.netupdown;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.view.WindowManager;
 
+import com.by_syk.lib.storage.SP;
 import com.by_syk.netupdown.service.NetTrafficService;
 
 /**
@@ -32,6 +36,8 @@ import com.by_syk.netupdown.service.NetTrafficService;
  */
 
 public class PrefActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
+    private SP sp;
+
     private CheckBoxPreference checkBoxPreference;
 
     private ServiceReceiver serviceReceiver;
@@ -45,6 +51,8 @@ public class PrefActivity extends PreferenceActivity implements Preference.OnPre
         checkBoxPreference.setOnPreferenceChangeListener(this);
 
         serviceReceiver = new ServiceReceiver();
+
+        sp = new SP(this, false);
     }
 
     @Override
@@ -87,7 +95,11 @@ public class PrefActivity extends PreferenceActivity implements Preference.OnPre
             case "run":
                 boolean isChecked = (Boolean) newValue;
                 if (isChecked) {
-                    runService();
+                    if (!sp.getBoolean("priorityHint")) {
+                        hintPriorityDialog();
+                    } else {
+                        runService();
+                    }
                 } else {
                     stopService();
                 }
@@ -95,6 +107,29 @@ public class PrefActivity extends PreferenceActivity implements Preference.OnPre
             default:
                 return true;
         }
+    }
+
+    private void hintPriorityDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setMessage(R.string.priority_desc)
+                .setPositiveButton(R.string.dia_bt_high_priority, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        sp.put("window", WindowManager.LayoutParams.TYPE_SYSTEM_ERROR)
+                                .put("priorityHint", true).save();
+                        runService();
+                    }
+                })
+                .setNegativeButton(R.string.dia_bt_low_priority, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        sp.put("window", WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
+                                .put("priorityHint", true).save();
+                        runService();
+                    }
+                })
+                .create();
+        alertDialog.show();
     }
 
     class ServiceReceiver extends BroadcastReceiver {
