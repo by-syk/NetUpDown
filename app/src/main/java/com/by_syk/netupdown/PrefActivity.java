@@ -1,5 +1,5 @@
 /**
- * Copyright 2016 By_syk
+ * Copyright 2016-2017 By_syk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,10 +26,13 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.WindowManager;
 
 import com.by_syk.lib.storage.SP;
 import com.by_syk.netupdown.service.NetTrafficService;
+import com.by_syk.netupdown.util.ExtraUtil;
 
 /**
  * Created by By_syk on 2016-11-08.
@@ -111,6 +114,7 @@ public class PrefActivity extends PreferenceActivity implements Preference.OnPre
 
     private void hintPriorityDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.dia_title_window_priority)
                 .setMessage(R.string.priority_desc)
                 .setPositiveButton(R.string.dia_bt_high_priority, new DialogInterface.OnClickListener() {
                     @Override
@@ -130,6 +134,23 @@ public class PrefActivity extends PreferenceActivity implements Preference.OnPre
                 })
                 .create();
         alertDialog.show();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_faq:
+                ExtraUtil.visitUrl(this, getString(R.string.faq_url));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     class ServiceReceiver extends BroadcastReceiver {

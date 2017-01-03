@@ -18,13 +18,15 @@ package com.by_syk.netupdown;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.by_syk.netupdown.fragment.PrefFragment;
 import com.by_syk.netupdown.util.C;
+import com.by_syk.netupdown.util.ExtraUtil;
 
 /**
  * Created by By_syk on 2016-11-08.
@@ -44,10 +46,24 @@ public class PrefActivityHoneycomb extends Activity {
 
         setContentView(R.layout.activity_pref);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        PrefFragment prefFragment = new PrefFragment();
-        fragmentTransaction.add(R.id.fragment, prefFragment);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.fragment, PrefFragment.newInstance());
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_faq:
+                ExtraUtil.visitUrl(this, getString(R.string.faq_url));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

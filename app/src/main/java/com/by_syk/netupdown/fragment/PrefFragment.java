@@ -1,5 +1,5 @@
 /**
- * Copyright 2016 By_syk
+ * Copyright 2016-2017 By_syk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,6 +51,10 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
     private ServiceReceiver serviceReceiver;
 
     public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
+
+    public static PrefFragment newInstance() {
+        return new PrefFragment();
+    }
 
     @TargetApi(14)
     @Override
@@ -169,6 +173,7 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
 
     private void hintPriorityDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.dia_title_window_priority)
                 .setMessage(R.string.priority_desc)
                 .setPositiveButton(R.string.dia_bt_high_priority, new DialogInterface.OnClickListener() {
                     @Override

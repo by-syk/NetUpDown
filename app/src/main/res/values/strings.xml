@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Copyright 2016 By_syk
+  Copyright 2016-2017 By_syk
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
     <string name="app_name">Upstream</string>
 
-    <string name="copyright" translatable="false">Copyright &#169; 2016 By_syk. All rights reserved.</string>
+    <string name="copyright" translatable="false">Copyright &#169; 2016-2017 By_syk. All rights reserved.</string>
 
     <string name="service">Net speed monitor</string>
     <string name="service_desc">For monitoring net speed in real time.</string>
@@ -38,15 +38,18 @@
     <!--<string name="preference_summary_special">For @</string>-->
     <!--<string name="preference_title_copyright">Copyright</string>-->
 
-    <string name="dia_bt_high_priority">Yes</string>
-    <string name="dia_bt_low_priority">No</string>
+    <string name="dia_title_window_priority">Floating window priority</string>
+    <string name="dia_bt_high_priority">High</string>
+    <string name="dia_bt_low_priority">Low</string>
+
+    <string name="menu_faq">FAQ</string>
 
     <string name="run_shortcut_short_label">Run Upstream</string>
     <string name="run_shortcut_long_label">Run Upstream</string>
     <string name="priority_desc">
-"Do you need the floating window to be dragged to the status bar?
-\nTIPS: If yes, high priority will be granted to the floating window. It may cause some video players unable to adjust brightness.
-Well, you could also toggle the option at any time by pressing and holding the floating window."</string>
+"If you want to drag the floating window to the status bar, please choose HIGH priority. However, it may cause some video players unable to adjust brightness.
+\nTIPS: you could also toggle the option at any time by pressing and holding the floating window."</string>
+    <string name="faq_url">https://github.com/by-syk/NetUpDown/blob/master/FAQ.md</string>
 
     <string name="tile_run">Run Upstream</string>
 

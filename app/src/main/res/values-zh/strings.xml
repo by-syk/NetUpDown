@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Copyright 2016 By_syk
+  Copyright 2016-2017 By_syk
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -35,14 +35,18 @@
     <!--<string name="preference_summary_special">为 @ 定制</string>-->
     <!--<string name="preference_title_copyright">版权所有</string>-->
 
-    <string name="dia_bt_high_priority">需要</string>
-    <string name="dia_bt_low_priority">不需要</string>
+    <string name="dia_title_window_priority">悬浮窗优先级</string>
+    <string name="dia_bt_high_priority">高</string>
+    <string name="dia_bt_low_priority">低</string>
+
+    <string name="menu_faq">FAQ</string>
 
     <string name="run_shortcut_short_label">网速悬浮窗</string>
     <string name="run_shortcut_long_label">显示网速悬浮窗</string>
     <string name="priority_desc">
-"是否需要采用高优先级模式以允许悬浮窗能被拖动到状态栏？
-\n提示：允许拖动到状态栏可能带来一些问题，比如造成某些视频播放器无法调节亮度。不过您也可以随时长按悬浮窗来切换这一设置。"</string>
+"如果需要悬浮窗拖动到状态栏，请选择高优先级。但高优先级可能带来一些问题，比如导致某些视频播放器调节亮度失效。
+\n提示：可以通过长按悬浮窗来快速切换优先级。"</string>
+    <string name="faq_url">https://github.com/by-syk/NetUpDown/blob/master/FAQ-zh.md</string>
 
     <string name="tile_run">网速悬浮窗</string>
 

@@ -1,5 +1,5 @@
 /**
- * Copyright 2016 By_syk
+ * Copyright 2016-2017 By_syk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,10 @@
 
 package com.by_syk.netupdown.util;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 
 import java.util.Locale;
 
@@ -94,4 +97,18 @@ public class ExtraUtil {
 //    public static boolean isNetworkConnected(Context context) {
 //        return isNetworkConnected(context, false);
 //    }
+
+    public static void visitUrl(Context context, String url) {
+        if (context == null || url == null) {
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
