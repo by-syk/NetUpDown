@@ -7,7 +7,8 @@
 > - 网速模式刷新周期为`1500ms`，流量模式刷新周期为`2000ms`
 
 - 关于悬浮窗优先级
-> `上行速`有`高`、`低`两种优先级，`高优先级`特征：可以显示在状态栏、通知栏、锁屏界面。`高优先级`可能带来一些问题，比如导致某些视频播放器调节亮度失效。<br />
+> `上行速`有`高`、`低`两种优先级，`高优先级`特征：可以显示在状态栏、通知栏、锁屏界面。`高优先级`可能带来一些问题，比如导致某些视频播放器调节亮度失效。
+>
 > 了解更多：<br />
 > Android 的窗口被设计了几种优先级，`上行速`的高优先级对应`TYPE_SYSTEM_ERROR`，低优先级对应`TYPE_SYSTEM_ALERT`，了解更多请访问<br />
 > [WindowManager.LayoutParams | Android Developers](https://developer.android.com/reference/android/view/WindowManager.LayoutParams.html#type)
