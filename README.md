@@ -17,6 +17,11 @@
    * on [Cool Market](http://www.coolapk.com/apk/com.by_syk.netupdown "Upstream")
 
 
+### FAQ
+
+View it [here](FAQ.md).
+
+
 ### Contact author
 
 * E-mail: [By_syk@163.com](mailto:By_syk@163.com "By_syk")
@@ -32,7 +37,7 @@ If you like it, you could pay me a cup of coffee. Thank you.
 
 ### License
 
-    Copyright 2016 By_syk
+    Copyright 2016-2017 By_syk
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -47,4 +52,4 @@ If you like it, you could pay me a cup of coffee. Thank you.
     limitations under the License.
 
 
-*Copyright &#169; 2016 By_syk. All rights reserved.*
+*Copyright &#169; 2016-2017 By_syk. All rights reserved.*
