@@ -7,9 +7,9 @@
 
 - 关于悬浮窗优先级
 > `上行速`有`高`、`低`两种优先级，`高优先级`特征：可以显示在状态栏、通知栏、锁屏界面。`高优先级`可能带来一些问题，比如导致某些视频播放器调节亮度失效。
-> 了解更多：
-> Android 的窗口被设计了几种优先级，`上行速`的高优先级对应`TYPE_SYSTEM_ERROR`，低优先级对应`TYPE_SYSTEM_ALERT`，了解更多请访问
-> [WindowManager.LayoutParams | Android Developers](https://developer.android.com/reference/android/view/WindowManager.LayoutParams.html#type)
+>   了解更多：
+>   Android 的窗口被设计了几种优先级，`上行速`的高优先级对应`TYPE_SYSTEM_ERROR`，低优先级对应`TYPE_SYSTEM_ALERT`，了解更多请访问
+>   [WindowManager.LayoutParams | Android Developers](https://developer.android.com/reference/android/view/WindowManager.LayoutParams.html#type)
 
 - 如何切换悬浮窗优先级？
 > 首次使用时会显示一次优先级选择对话框，在此处可作选择；当悬浮窗已显示，您随时可以通过`长按悬浮窗`来快速切换优先级。
