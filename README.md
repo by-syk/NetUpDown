@@ -1,6 +1,8 @@
-![icon.png](art/icon.png)
-
 # Upstream - Net speed floating window
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://github.com/by-syk/NanoIconPack/blob/master/LICENSE)
+
+![icon.png](art/icon.png)
 
 
 ### Description
