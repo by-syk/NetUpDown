@@ -43,12 +43,11 @@ public class QuickRunActivity extends Activity {
 
     @TargetApi(23)
     private void tryRun() {
-        if (C.SDK >= 23 && !Settings.canDrawOverlays(this)) { // No permission
-            finish();
+        if (!ACTION_RUN.equals(getIntent().getAction())) {
             return;
         }
 
-        if (ACTION_RUN.equals(getIntent().getAction())) {
+        if (C.SDK < 23 || Settings.canDrawOverlays(this)) {
             if (!NetTrafficService.isRunning) {
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
                 sp.edit().putBoolean("run", true).commit();

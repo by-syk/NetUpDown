@@ -35,9 +35,9 @@
     <!--<string name="preference_summary_special">为 @ 定制</string>-->
     <!--<string name="preference_title_copyright">版权所有</string>-->
 
-    <string name="dia_title_window_priority">悬浮窗优先级</string>
-    <string name="dia_bt_high_priority">高</string>
-    <string name="dia_bt_low_priority">低</string>
+    <string name="dlg_title_window_priority">悬浮窗优先级</string>
+    <string name="dlg_bt_high_priority">高</string>
+    <string name="dlg_bt_low_priority">低</string>
 
     <string name="menu_faq">FAQ</string>
 
@@ -47,6 +47,7 @@
 "如果需要悬浮窗拖动到状态栏，请选择高优先级。但高优先级可能带来一些问题，比如导致某些视频播放器调节亮度失效。
 \n提示：可以通过长按悬浮窗来快速切换优先级。"</string>
     <string name="faq_url">https://github.com/by-syk/NetUpDown/blob/master/FAQ-zh.md</string>
+    <!--<string name="xposed_desc">融入状态栏显示网速</string>-->
 
     <string name="tile_run">网速悬浮窗</string>
 

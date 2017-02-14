@@ -8,8 +8,8 @@ android {
         applicationId "com.by_syk.netupdown"
         minSdkVersion 8
         targetSdkVersion 25
-        versionCode 170103000
-        versionName "1.1.2"
+        versionCode 170105000
+        versionName "1.1.3.nightly"
 
         vectorDrawables.generatedDensities = ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi']
     }
@@ -39,4 +39,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile(name:'sp-1.0.2', ext:'aar')
+
+    // Xposed
+    // It is very important that you use provided instead of compile!
+    provided 'de.robv.android.xposed:api:82'
+    //provided 'de.robv.android.xposed:api:82:sources'
 }

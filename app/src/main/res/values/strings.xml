@@ -38,9 +38,9 @@
     <!--<string name="preference_summary_special">For @</string>-->
     <!--<string name="preference_title_copyright">Copyright</string>-->
 
-    <string name="dia_title_window_priority">Floating window priority</string>
-    <string name="dia_bt_high_priority">High</string>
-    <string name="dia_bt_low_priority">Low</string>
+    <string name="dlg_title_window_priority">Floating window priority</string>
+    <string name="dlg_bt_high_priority">High</string>
+    <string name="dlg_bt_low_priority">Low</string>
 
     <string name="menu_faq">FAQ</string>
 
@@ -50,6 +50,7 @@
 "If you want to drag the floating window to the status bar, please choose HIGH priority. However, it may cause some video players unable to adjust brightness.
 \nTIPS: you could also toggle the option at any time by pressing and holding the floating window."</string>
     <string name="faq_url">https://github.com/by-syk/NetUpDown/blob/master/FAQ.md</string>
+    <!--<string name="xposed_desc">Show net speed on the status bar</string>-->
 
     <string name="tile_run">Run Upstream</string>
 

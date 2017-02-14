@@ -161,7 +161,7 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
     }
 
     @TargetApi(23)
-    public void requestDrawOverLays() {
+    private void requestDrawOverLays() {
         if (canDrawOverlays()) {
             return;
         }
@@ -173,9 +173,9 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
 
     private void hintPriorityDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.dia_title_window_priority)
+                .setTitle(R.string.dlg_title_window_priority)
                 .setMessage(R.string.priority_desc)
-                .setPositiveButton(R.string.dia_bt_high_priority, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.dlg_bt_high_priority, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         sp.put("window", WindowManager.LayoutParams.TYPE_SYSTEM_ERROR)
@@ -183,7 +183,7 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
                         runService();
                     }
                 })
-                .setNegativeButton(R.string.dia_bt_low_priority, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.dlg_bt_low_priority, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         sp.put("window", WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
