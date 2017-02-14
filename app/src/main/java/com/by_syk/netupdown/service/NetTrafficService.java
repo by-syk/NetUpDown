@@ -192,6 +192,7 @@ public class NetTrafficService extends Service {
                     text = readableNetSpeed;
 //                    text = "σ" + (int) variance + " " + readableNetSpeed;
 //                    text = readableNetSpeedUp + " | " + readableNetSpeedDown;
+//                    text = "▲" + readableNetSpeedUp + "\n▼" + readableNetSpeedDown;
                 } else {
                     text = readableUsedBytes;
                 }
