@@ -46,9 +46,9 @@ public class PrefActivityHoneycomb extends Activity {
 
         setContentView(R.layout.activity_pref);
 
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fragment, PrefFragment.newInstance());
-        fragmentTransaction.commit();
+        getFragmentManager().beginTransaction()
+                .replace(R.id.fragment, PrefFragment.newInstance())
+                .commit();
     }
 
     @Override
