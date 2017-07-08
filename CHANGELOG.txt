@@ -1,3 +1,6 @@
+v1.1.3 2017-07-08
+- Turning off is turning off.
+
 v1.1.2 2017-01-03
 - Add FAQ.
 
