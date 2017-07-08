@@ -24,6 +24,7 @@ import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
+import com.by_syk.netupdown.R;
 import com.by_syk.netupdown.util.C;
 
 /**
@@ -32,6 +33,8 @@ import com.by_syk.netupdown.util.C;
 
 @TargetApi(24)
 public class QSTileService extends TileService {
+    private SharedPreferences sp;
+
 //    @Override
 //    public void onTileAdded() {
 //        super.onTileAdded();
@@ -43,10 +46,17 @@ public class QSTileService extends TileService {
 //    }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+
+        sp = PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    @Override
     public void onStartListening() {
         super.onStartListening();
 
-        if (NetTrafficService.isRunning) {
+        if (sp.getBoolean("run", false)) {
             switchState(true);
         } else {
             switchState(false);
@@ -63,16 +73,17 @@ public class QSTileService extends TileService {
         super.onClick();
 
         if (C.SDK >= 23 && !Settings.canDrawOverlays(this)) { // No permission
+            updateTitle(getString(R.string.tile_no_permission));
             return;
         }
 
-        if (!NetTrafficService.isRunning) {
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!sp.getBoolean("run", false)) {
             sp.edit().putBoolean("run", true).commit();
             startService(new Intent(getApplicationContext(), NetTrafficService.class));
 
             switchState(true);
         } else {
+            sp.edit().putBoolean("run", false).commit();
             stopService(new Intent(getApplicationContext(), NetTrafficService.class));
 
             switchState(false);
@@ -82,12 +93,24 @@ public class QSTileService extends TileService {
     private void switchState(boolean isActive) {
         Tile tile = getQsTile();
         if (tile != null) {
+            tile.setLabel(getString(R.string.tile_run));
             if (isActive) {
                 tile.setState(Tile.STATE_ACTIVE);
             } else {
                 tile.setState(Tile.STATE_INACTIVE);
             }
 
+            tile.updateTile();
+        }
+    }
+
+    private void updateTitle(String title) {
+        if (title == null) {
+            return;
+        }
+        Tile tile = getQsTile();
+        if (tile != null) {
+            tile.setLabel(title);
             tile.updateTile();
         }
     }

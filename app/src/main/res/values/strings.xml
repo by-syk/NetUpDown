@@ -53,5 +53,6 @@
     <!--<string name="xposed_desc">Show net speed on the status bar</string>-->
 
     <string name="tile_run">Run Upstream</string>
+    <string name="tile_no_permission">No permission</string>
 
 </resources>

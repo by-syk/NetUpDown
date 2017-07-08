@@ -21,8 +21,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -148,6 +150,9 @@ public class NetTrafficService extends Service {
             @Override
             public void onTripleTap() {
                 touchFeedback();
+                SharedPreferences sp = PreferenceManager
+                        .getDefaultSharedPreferences(NetTrafficService.this);
+                sp.edit().putBoolean("run", false).commit();
                 stopSelf();
             }
 

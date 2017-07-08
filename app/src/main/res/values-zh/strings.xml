@@ -50,5 +50,6 @@
     <!--<string name="xposed_desc">融入状态栏显示网速</string>-->
 
     <string name="tile_run">网速悬浮窗</string>
+    <string name="tile_no_permission">无权限</string>
 
 </resources>
