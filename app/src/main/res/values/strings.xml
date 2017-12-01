@@ -50,6 +50,13 @@
 "If you want to drag the floating window to the status bar, please choose HIGH priority. However, it may cause some video players unable to adjust brightness.
 \nTIPS: you could also toggle the option at any time by pressing and holding the floating window."</string>
     <string name="faq_url">https://github.com/by-syk/NetUpDown/blob/master/FAQ.md</string>
+    <!--<string name="option_speed">SPEED</string>-->
+    <!--<string name="option_sum">FLOW</string>-->
+    <!--<string name="option_close">CLOSE</string>-->
+    <string name="mode_speed">SPEED MODE</string>
+    <string name="mode_flow">FLOW MODE</string>
+    <string name="priority_high">HIGH PRIORITY</string>
+    <string name="priority_low">LOW PRIORITY</string>
     <!--<string name="xposed_desc">Show net speed on the status bar</string>-->
 
     <string name="tile_run">Run Upstream</string>

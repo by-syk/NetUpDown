@@ -222,13 +222,15 @@ public class NetTrafficService extends Service {
             mode = MODE_FLOW;
 
             sp.put("startTotalBytes", netTrafficSpider.getStartTotalBytes());
+
+            tvSpeed.setText(getString(R.string.mode_flow));
         } else {
             netTrafficSpider.setRefreshPeriod(1500);
             mode = MODE_SPEED;
+
+            tvSpeed.setText(getString(R.string.mode_speed));
         }
         sp.put("mode", mode).save();
-
-        tvSpeed.setText(getString(R.string.app_name));
     }
 
     private void switchWindow(int curWindow, boolean execute) {

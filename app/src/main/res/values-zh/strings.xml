@@ -47,6 +47,13 @@
 "如果需要悬浮窗拖动到状态栏，请选择高优先级。但高优先级可能带来一些问题，比如导致某些视频播放器调节亮度失效。
 \n提示：可以通过长按悬浮窗来快速切换优先级。"</string>
     <string name="faq_url">https://github.com/by-syk/NetUpDown/blob/master/FAQ-zh.md</string>
+    <!--<string name="option_speed">计速</string>-->
+    <!--<string name="option_sum">计量</string>-->
+    <!--<string name="option_close">关闭</string>-->
+    <string name="mode_speed">计速</string>
+    <string name="mode_flow">计量</string>
+    <string name="priority_high">高权限</string>
+    <string name="priority_low">低权限</string>
     <!--<string name="xposed_desc">融入状态栏显示网速</string>-->
 
     <string name="tile_run">网速悬浮窗</string>

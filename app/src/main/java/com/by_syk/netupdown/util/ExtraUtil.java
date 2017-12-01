@@ -29,24 +29,34 @@ import java.util.Locale;
 
 public class ExtraUtil {
     public static String getReadableNetSpeed(long netSpeed) {
-        if (netSpeed < 1024) {
+        if (netSpeed == 0) {
+            return "0.0B/s";
+        } else if (netSpeed < 1024) {
             return netSpeed + "B/s";
-        } else if (netSpeed < 1024 * 1024) {
+        } else if (netSpeed < 1024 * 100) {
             return String.format(Locale.US, "%.1fK/s", (netSpeed / 1024f));
-        } else if (netSpeed < 1024 * 1024 * 1024) {
+        } else if (netSpeed < 1024 * 1024) {
+            return (netSpeed / 1024) + "K/s";
+        } else if (netSpeed < 1024 * 1024 * 10) {
             return String.format(Locale.US, "%.2fM/s", (netSpeed / (1024f * 1024f)));
+        } else if (netSpeed < 1024 * 1024 * 1024) {
+            return String.format(Locale.US, "%.1fM/s", (netSpeed / (1024f * 1024f)));
         } else {
             return String.format(Locale.US, "%.2fG/s", (netSpeed / (1024f * 1024f * 1024f)));
         }
     }
 
     public static String getReadableBytes(long bytes) {
-        if (bytes < 1024) {
+        if (bytes == 0) {
+            return "0.0B";
+        } else if (bytes < 1024) {
             return bytes + "B";
         } else if (bytes < 1024 * 1024) {
-            return String.format(Locale.US, "%.1fKB", (bytes / 1024f));
-        } else if (bytes < 1024 * 1024 * 1024) {
+            return (bytes / 1024) + "KB";
+        } else if (bytes < 1024 * 1024 * 100) {
             return String.format(Locale.US, "%.2fMB", (bytes / (1024f * 1024f)));
+        } else if (bytes < 1024 * 1024 * 1024) {
+            return String.format(Locale.US, "%.1fMB", (bytes / (1024f * 1024f)));
         } else {
             return String.format(Locale.US, "%.2fGB", (bytes / (1024f * 1024f * 1024f)));
         }

@@ -206,7 +206,8 @@ public class NetTrafficSpider {
     public interface Callback {
         void beforeStart();
         void onUpdate(long netSpeed, long netSpeedUp, long netSpeedDown, long usedBytes,
-                      String readableNetSpeed, String readableNetSpeedUp, String readableNetSpeedDown, String readableUsedBytes);
+                      String readableNetSpeed, String readableNetSpeedUp, String readableNetSpeedDown,
+                      String readableUsedBytes);
         void afterStop();
     }
 }
