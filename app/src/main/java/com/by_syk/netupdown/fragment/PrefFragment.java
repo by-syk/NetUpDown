@@ -32,7 +32,7 @@ import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.view.WindowManager;
 
-import com.by_syk.lib.storage.SP;
+import com.by_syk.lib.sp.SP;
 import com.by_syk.netupdown.R;
 import com.by_syk.netupdown.service.NetTrafficService;
 import com.by_syk.netupdown.util.C;
@@ -77,7 +77,7 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
 
         serviceReceiver = new ServiceReceiver();
 
-        sp = new SP(getActivity(), false);
+        sp = new SP(getActivity());
     }
 
     @Override
@@ -208,6 +208,9 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
     class ServiceReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            if (intent == null || intent.getAction() == null) {
+                return;
+            }
             switch (intent.getAction()) {
                 case NetTrafficService.ACTION_SERVICE_RUN:
                     setChecked(true);

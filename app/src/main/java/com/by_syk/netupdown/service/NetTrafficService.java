@@ -30,7 +30,7 @@ import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
 
-import com.by_syk.lib.storage.SP;
+import com.by_syk.lib.sp.SP;
 import com.by_syk.netupdown.R;
 import com.by_syk.netupdown.util.ExtraUtil;
 import com.by_syk.netupdown.util.NetTrafficSpider;
@@ -121,7 +121,7 @@ public class NetTrafficService extends Service {
     }
 
     private void init() {
-        sp = new SP(this, false);
+        sp = new SP(this);
         mode = sp.getInt("mode", MODE_SPEED);
         if (!sp.contains("y")) {
             sp.save("y", ExtraUtil.getStatusHeight(this));
@@ -267,6 +267,9 @@ public class NetTrafficService extends Service {
     class ScreenReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            if (intent == null || intent.getAction() == null) {
+                return;
+            }
             switch (intent.getAction()) {
                 case Intent.ACTION_SCREEN_OFF:
                     isSleep = true;

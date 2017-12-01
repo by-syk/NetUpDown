@@ -30,7 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import com.by_syk.lib.storage.SP;
+import com.by_syk.lib.sp.SP;
 import com.by_syk.netupdown.service.NetTrafficService;
 import com.by_syk.netupdown.util.ExtraUtil;
 
@@ -55,7 +55,7 @@ public class PrefActivity extends PreferenceActivity implements Preference.OnPre
 
         serviceReceiver = new ServiceReceiver();
 
-        sp = new SP(this, false);
+        sp = new SP(this);
     }
 
     @Override

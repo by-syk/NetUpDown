@@ -1,17 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.3"
 
     defaultConfig {
         applicationId "com.by_syk.netupdown"
         minSdkVersion 8
         targetSdkVersion 25
-        versionCode 170708000
-        versionName "1.1.3"
+        versionCode 171201000
+        versionName "1.2.0.nightly"
 
-        vectorDrawables.generatedDensities = ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi']
+        vectorDrawables.generatedDensities = ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi']
     }
 
     buildTypes {
@@ -21,16 +21,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    /*lintOptions {
-        disable 'MissingTranslation'
-    }*/
-}
-
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
 }
 
 dependencies {
@@ -38,7 +28,7 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
 
-    compile(name:'sp-1.0.2', ext:'aar')
+    compile 'com.github.by-syk:SP:1.0.9'
 
     // Xposed
     // It is very important that you use provided instead of compile!

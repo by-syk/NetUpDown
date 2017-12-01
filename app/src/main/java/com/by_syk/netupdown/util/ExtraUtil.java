@@ -32,11 +32,11 @@ public class ExtraUtil {
         if (netSpeed < 1024) {
             return netSpeed + "B/s";
         } else if (netSpeed < 1024 * 1024) {
-            return String.format(Locale.US, "%.1fKB/s", (netSpeed / 1024f));
+            return String.format(Locale.US, "%.1fK/s", (netSpeed / 1024f));
         } else if (netSpeed < 1024 * 1024 * 1024) {
-            return String.format(Locale.US, "%.2fMB/s", (netSpeed / (1024f * 1024f)));
+            return String.format(Locale.US, "%.2fM/s", (netSpeed / (1024f * 1024f)));
         } else {
-            return String.format(Locale.US, "%.2fGB/s", (netSpeed / (1024f * 1024f * 1024f)));
+            return String.format(Locale.US, "%.2fG/s", (netSpeed / (1024f * 1024f * 1024f)));
         }
     }
 
