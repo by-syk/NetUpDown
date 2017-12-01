@@ -112,7 +112,7 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
                     if (!NetTrafficService.isRunning) {
                         if (canDrawOverlays()) {
                             if (!sp.getBoolean("priorityHint")) {
-                                hintPriorityDialog();
+                                setPriorityAndRun();
                             } else {
                                 runService();
                             }
@@ -171,8 +171,15 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
         startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
     }
 
-    private void hintPriorityDialog() {
-        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+    private void setPriorityAndRun() {
+        if (C.SDK >= 26) { // TODO SDK 26
+            sp.put("window", WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
+                    .put("priorityHint", true).save();
+            runService();
+            return;
+        }
+
+        AlertDialog dlg = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.dlg_title_window_priority)
                 .setMessage(R.string.priority_desc)
                 .setPositiveButton(R.string.dlg_bt_high_priority, new DialogInterface.OnClickListener() {
@@ -192,7 +199,7 @@ public class PrefFragment extends PreferenceFragment implements Preference.OnPre
                     }
                 })
                 .create();
-        alertDialog.show();
+        dlg.show();
     }
 
     @TargetApi(23)

@@ -32,6 +32,7 @@ import android.view.WindowManager;
 
 import com.by_syk.lib.sp.SP;
 import com.by_syk.netupdown.R;
+import com.by_syk.netupdown.util.C;
 import com.by_syk.netupdown.util.ExtraUtil;
 import com.by_syk.netupdown.util.NetTrafficSpider;
 import com.by_syk.netupdown.widget.FloatTextView;
@@ -158,6 +159,9 @@ public class NetTrafficService extends Service {
 
             @Override
             public void onLongPress() {
+                if (C.SDK >= 26) { // TODO SDK 26
+                    return;
+                }
                 touchFeedback();
                 switchWindow(layoutParams.type, true);
             }
@@ -174,6 +178,7 @@ public class NetTrafficService extends Service {
         switchWindow(sp.getInt("window", WindowManager.LayoutParams.TYPE_SYSTEM_ERROR), false);
 
         windowManager = (WindowManager) getApplication().getSystemService(WINDOW_SERVICE);
+        // TODO SDK 26
         windowManager.addView(tvSpeed, layoutParams);
     }
 

@@ -8,7 +8,7 @@ android {
         applicationId "com.by_syk.netupdown"
         minSdkVersion 8
         targetSdkVersion 25
-        versionCode 171201000
+        versionCode 171201010
         versionName "1.1.4"
 
         vectorDrawables.generatedDensities = ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi']
@@ -29,6 +29,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile 'com.github.by-syk:SP:1.0.9'
+//    compile 'com.github.by-syk:GlobalToast:1.2.2'
 
     // Xposed
     // It is very important that you use provided instead of compile!

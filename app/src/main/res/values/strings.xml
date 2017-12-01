@@ -44,6 +44,8 @@
 
     <string name="menu_faq">FAQ</string>
 
+    <!--<string name="toast_no_high_priority_on_oreo">High priority is not supported on Oreo.</string>-->
+
     <string name="run_shortcut_short_label">Run Upstream</string>
     <string name="run_shortcut_long_label">Run Upstream</string>
     <string name="priority_desc">

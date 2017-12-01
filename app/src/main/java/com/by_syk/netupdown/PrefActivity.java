@@ -99,7 +99,7 @@ public class PrefActivity extends PreferenceActivity implements Preference.OnPre
                 boolean isChecked = (Boolean) newValue;
                 if (isChecked) {
                     if (!sp.getBoolean("priorityHint")) {
-                        hintPriorityDialog();
+                        setPriorityAndRun();
                     } else {
                         runService();
                     }
@@ -112,8 +112,8 @@ public class PrefActivity extends PreferenceActivity implements Preference.OnPre
         }
     }
 
-    private void hintPriorityDialog() {
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
+    private void setPriorityAndRun() {
+        AlertDialog dlg = new AlertDialog.Builder(this)
                 .setTitle(R.string.dlg_title_window_priority)
                 .setMessage(R.string.priority_desc)
                 .setPositiveButton(R.string.dlg_bt_high_priority, new DialogInterface.OnClickListener() {
@@ -133,7 +133,7 @@ public class PrefActivity extends PreferenceActivity implements Preference.OnPre
                     }
                 })
                 .create();
-        alertDialog.show();
+        dlg.show();
     }
 
 

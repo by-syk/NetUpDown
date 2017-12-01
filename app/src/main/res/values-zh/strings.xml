@@ -41,6 +41,8 @@
 
     <string name="menu_faq">FAQ</string>
 
+    <!--<string name="toast_no_high_priority_on_oreo">Oreo 不支持高优先级悬浮窗</string>-->
+
     <string name="run_shortcut_short_label">网速悬浮窗</string>
     <string name="run_shortcut_long_label">显示网速悬浮窗</string>
     <string name="priority_desc">
@@ -52,8 +54,8 @@
     <!--<string name="option_close">关闭</string>-->
     <string name="mode_speed">计速</string>
     <string name="mode_flow">计量</string>
-    <string name="priority_high">高权限</string>
-    <string name="priority_low">低权限</string>
+    <string name="priority_high">高优先级</string>
+    <string name="priority_low">低优先级</string>
     <!--<string name="xposed_desc">融入状态栏显示网速</string>-->
 
     <string name="tile_run">网速悬浮窗</string>
