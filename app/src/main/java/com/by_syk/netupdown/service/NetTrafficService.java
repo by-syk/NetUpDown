@@ -22,13 +22,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.by_syk.lib.sp.SP;
 import com.by_syk.netupdown.R;
@@ -44,7 +48,11 @@ import com.by_syk.netupdown.widget.FloatTextView;
 public class NetTrafficService extends Service {
     private WindowManager windowManager;
     private WindowManager.LayoutParams layoutParams;
+    private ViewGroup viewRoot;
     private FloatTextView tvSpeed;
+    private TextView tvOptionSpeed;
+    private TextView tvOptionFlow;
+    private TextView tvOptionClose;
 
     private SP sp;
 
@@ -62,6 +70,8 @@ public class NetTrafficService extends Service {
 
     public static final String ACTION_SERVICE_RUN = "com.by_syk.netupdown.ACTION_SERVICE_RUN";
     public static final String ACTION_SERVICE_DIED = "com.by_syk.netupdown.ACTION_SERVICE_DIED";
+
+    private Runnable resumeViewRunnable = null;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -112,7 +122,7 @@ public class NetTrafficService extends Service {
 
         netTrafficSpider.stop();
 
-        windowManager.removeView(tvSpeed);
+        windowManager.removeView(viewRoot);
 
         unregisterReceiver(screenReceiver);
 
@@ -130,16 +140,24 @@ public class NetTrafficService extends Service {
     }
 
     private void initView() {
-        tvSpeed = (FloatTextView) LayoutInflater.from(getApplicationContext())
+        viewRoot = (ViewGroup) LayoutInflater.from(getApplicationContext())
                 .inflate(R.layout.view_window, null);
+
+        tvSpeed = viewRoot.findViewById(R.id.tv_speed);
         tvSpeed.setOnMoveListener(new FloatTextView.OnMoveListener() {
             @Override
             public void onMove(int x, int y) {
                 layoutParams.x = x;
                 layoutParams.y = y;
-                windowManager.updateViewLayout(tvSpeed, layoutParams);
+                windowManager.updateViewLayout(viewRoot, layoutParams);
 
                 sp.put("x", x).put("y", y).save();
+            }
+
+            @Override
+            public void onTap() {
+                toggleOptions(true);
+                touchFeedback();
             }
 
             @Override
@@ -150,11 +168,7 @@ public class NetTrafficService extends Service {
 
             @Override
             public void onTripleTap() {
-                touchFeedback();
-                SharedPreferences sp = PreferenceManager
-                        .getDefaultSharedPreferences(NetTrafficService.this);
-                sp.edit().putBoolean("run", false).commit();
-                stopSelf();
+                tvOptionClose.performClick();
             }
 
             @Override
@@ -164,6 +178,36 @@ public class NetTrafficService extends Service {
                 }
                 touchFeedback();
                 switchWindow(layoutParams.type, true);
+            }
+        });
+
+        tvOptionSpeed = viewRoot.findViewById(R.id.tv_option_speed);
+        tvOptionSpeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleOptions(false);
+                switchMode(MODE_SPEED);
+                touchFeedback();
+            }
+        });
+        tvOptionFlow = viewRoot.findViewById(R.id.tv_option_flow);
+        tvOptionFlow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleOptions(false);
+                switchMode(MODE_FLOW);
+                touchFeedback();
+            }
+        });
+        tvOptionClose = viewRoot.findViewById(R.id.tv_option_close);
+        tvOptionClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                touchFeedback();
+                SharedPreferences sp = PreferenceManager
+                        .getDefaultSharedPreferences(NetTrafficService.this);
+                sp.edit().putBoolean("run", false).commit();
+                stopSelf();
             }
         });
 
@@ -179,7 +223,7 @@ public class NetTrafficService extends Service {
 
         windowManager = (WindowManager) getApplication().getSystemService(WINDOW_SERVICE);
         // TODO SDK 26
-        windowManager.addView(tvSpeed, layoutParams);
+        windowManager.addView(viewRoot, layoutParams);
     }
 
     private void initThread() {
@@ -192,19 +236,21 @@ public class NetTrafficService extends Service {
             public void beforeStart() {}
 
             @Override
-            public void onUpdate(long netSpeed, long netSpeedUp, long netSpeedDown, long usedBytes,
-                                 String readableNetSpeed, String readableNetSpeedUp, String readableNetSpeedDown, String readableUsedBytes) {
+            public void onUpdate(long netSpeed, long netSpeedUp, long netSpeedDown, long usedBytes) {
                 if (isSleep) { // Do not update view when screen is off.
                     return;
                 }
-//                Log.d(C.LOG_TAG, "NetTrafficSpider.Callback onUpdate: " + readableNetSpeed);
+//                Log.d(C.LOG_TAG, "NetTrafficSpider.Callback onUpdate: "
+//                        + ExtraUtil.getReadableNetSpeed(netSpeed));
                 if (mode == MODE_SPEED) {
-                    text = readableNetSpeed;
-//                    text = "σ" + (int) variance + " " + readableNetSpeed;
-//                    text = readableNetSpeedUp + " | " + readableNetSpeedDown;
-//                    text = "▲" + readableNetSpeedUp + "\n▼" + readableNetSpeedDown;
+                    text = ExtraUtil.getReadableNetSpeed(netSpeed);
+//                    text = "σ" + (int) variance + " " + ExtraUtil.getReadableNetSpeed(netSpeed);
+//                    text = ExtraUtil.getReadableNetSpeed(netSpeedUp) + " | "
+//                            + ExtraUtil.getReadableNetSpeed(netSpeedDown);
+//                    text = "▲" + ExtraUtil.getReadableNetSpeed(netSpeedUp) + "\n▼"
+//                            + ExtraUtil.getReadableNetSpeed(netSpeedDown);
                 } else {
-                    text = readableUsedBytes;
+                    text = ExtraUtil.getReadableBytes(usedBytes);
                 }
                 tvSpeed.post(new Runnable() {
                     @Override
@@ -220,8 +266,38 @@ public class NetTrafficService extends Service {
         netTrafficSpider.start();
     }
 
-    private void switchMode() {
-        if (mode == MODE_SPEED) {
+    private void toggleOptions(boolean toOpen) {
+        if (toOpen) {
+            tvOptionSpeed.setTextColor(mode == MODE_SPEED ? Color.GREEN : Color.WHITE);
+            tvOptionFlow.setTextColor(mode == MODE_FLOW ? Color.GREEN : Color.WHITE);
+
+            tvOptionSpeed.setVisibility(View.VISIBLE);
+            tvOptionFlow.setVisibility(View.VISIBLE);
+            tvOptionClose.setVisibility(View.VISIBLE);
+            tvSpeed.setVisibility(View.GONE);
+
+            if (resumeViewRunnable != null) {
+                tvSpeed.removeCallbacks(resumeViewRunnable);
+            }
+            tvSpeed.postDelayed(resumeViewRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (isRunning) {
+                        toggleOptions(false);
+                    }
+                }
+            }, 4000);
+        } else {
+            tvOptionSpeed.setVisibility(View.GONE);
+            tvOptionFlow.setVisibility(View.GONE);
+            tvOptionClose.setVisibility(View.GONE);
+            tvSpeed.setVisibility(View.VISIBLE);
+        }
+    }
+
+    
+    private void switchMode(int targetMode) {
+        if (targetMode == MODE_FLOW) {
             netTrafficSpider.resetUsedBytes();
             netTrafficSpider.setRefreshPeriod(2000);
             mode = MODE_FLOW;
@@ -236,6 +312,10 @@ public class NetTrafficService extends Service {
             tvSpeed.setText(getString(R.string.mode_speed));
         }
         sp.put("mode", mode).save();
+    }
+
+    private void switchMode() {
+        switchMode(mode == MODE_SPEED ? MODE_FLOW : MODE_SPEED);
     }
 
     private void switchWindow(int curWindow, boolean execute) {
@@ -261,8 +341,8 @@ public class NetTrafficService extends Service {
 
         if (execute) {
 //            windowManager.updateViewLayout(tvSpeed, layoutParams);
-            windowManager.removeView(tvSpeed);
-            windowManager.addView(tvSpeed, layoutParams);
+            windowManager.removeView(viewRoot);
+            windowManager.addView(viewRoot, layoutParams);
         }
     }
 

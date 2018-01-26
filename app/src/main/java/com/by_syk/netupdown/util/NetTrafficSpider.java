@@ -179,9 +179,7 @@ public class NetTrafficSpider {
                 usedBytes = lastTotalBytes - startTotalBytes;
 
                 if (callback != null) {
-                    callback.onUpdate(netSpeed, netSpeedUp, netSpeedDown, usedBytes,
-                            getReadableNetSpeed(), getReadableNetSpeedUp(), getReadableNetSpeedDown(),
-                            getReadableUsedBytes());
+                    callback.onUpdate(netSpeed, netSpeedUp, netSpeedDown, usedBytes);
                 }
 
                 SystemClock.sleep(refreshPeriod);
@@ -205,9 +203,7 @@ public class NetTrafficSpider {
 
     public interface Callback {
         void beforeStart();
-        void onUpdate(long netSpeed, long netSpeedUp, long netSpeedDown, long usedBytes,
-                      String readableNetSpeed, String readableNetSpeedUp, String readableNetSpeedDown,
-                      String readableUsedBytes);
+        void onUpdate(long netSpeed, long netSpeedUp, long netSpeedDown, long usedBytes);
         void afterStop();
     }
 }

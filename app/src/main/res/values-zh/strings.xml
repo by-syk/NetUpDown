@@ -23,8 +23,7 @@
     <string name="service_desc">实时计算网速并显示在悬浮窗上</string>
 
     <string name="preference_title_hint">TIPS</string>
-    <string name="preference_summary_hint">这是一款实时显示网速的悬浮窗小工具。双击切换网速/流量模式，三连击隐藏。</string>
-    <!--<string name="preference_summary_hint">这是一款实时显示网速的悬浮窗小工具。双击切换网速/流量模式，三连击隐藏；长按切换高/低优先级模式。</string>-->
+    <string name="preference_summary_hint">这是一款实时显示网速的悬浮窗小工具。点按悬浮窗可切换计速、计量模式。</string>
     <string name="preference_category_settings">设置</string>
     <string name="preference_title_run">运行</string>
     <string name="preference_summary_on_run">实时计速服务已启动并已显示悬浮窗</string>
@@ -49,9 +48,9 @@
 "如果需要悬浮窗拖动到状态栏，请选择高优先级。但高优先级可能带来一些问题，比如导致某些视频播放器调节亮度失效。
 \n提示：可以通过长按悬浮窗来快速切换优先级。"</string>
     <string name="faq_url">https://github.com/by-syk/NetUpDown/blob/master/FAQ-zh.md</string>
-    <!--<string name="option_speed">计速</string>-->
-    <!--<string name="option_sum">计量</string>-->
-    <!--<string name="option_close">关闭</string>-->
+    <string name="option_speed">计速</string>
+    <string name="option_flow">计量</string>
+    <string name="option_close">隐藏</string>
     <string name="mode_speed">计速</string>
     <string name="mode_flow">计量</string>
     <string name="priority_high">高优先级</string>

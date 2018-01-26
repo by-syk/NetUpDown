@@ -19,14 +19,13 @@
 
     <string name="app_name">Upstream</string>
 
-    <string name="copyright" translatable="false">Copyright &#169; 2016-2017 By_syk. All rights reserved.</string>
+    <string name="copyright" translatable="false">Copyright &#169; 2016-2018 By_syk. All rights reserved.</string>
 
     <string name="service">Net speed monitor</string>
     <string name="service_desc">For monitoring net speed in real time.</string>
 
     <string name="preference_title_hint">TIPS</string>
-    <string name="preference_summary_hint">This is a small tool to show net speed in real time. DOUBLE TAP to switch speed/flow mode, and TRIPLE TAP to hide.</string>
-    <!--<string name="preference_summary_hint">This is a small tool to show net speed in real time. DOUBLE TAP to switch speed/flow mode, TRIPLE TAP to hide, and LONG PRESS to switch high-priority/low-priority mode.</string>-->
+    <string name="preference_summary_hint">This is a small tool to show network speed in real time. Tap the window to switch SPEED/FLOW mode.</string>
     <string name="preference_category_settings">Settings</string>
     <string name="preference_title_run">Run</string>
     <string name="preference_summary_on_run">The service is running and a floating window is shown.</string>
@@ -52,9 +51,9 @@
 "If you want to drag the floating window to the status bar, please choose HIGH priority. However, it may cause some video players unable to adjust brightness.
 \nTIPS: you could also toggle the option at any time by pressing and holding the floating window."</string>
     <string name="faq_url">https://github.com/by-syk/NetUpDown/blob/master/FAQ.md</string>
-    <!--<string name="option_speed">SPEED</string>-->
-    <!--<string name="option_sum">FLOW</string>-->
-    <!--<string name="option_close">CLOSE</string>-->
+    <string name="option_speed">SPEED</string>
+    <string name="option_flow">FLOW</string>
+    <string name="option_close">HIDE</string>
     <string name="mode_speed">SPEED MODE</string>
     <string name="mode_flow">FLOW MODE</string>
     <string name="priority_high">HIGH PRIORITY</string>

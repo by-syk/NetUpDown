@@ -15,15 +15,64 @@
   limitations under the License.
   -->
 
-<com.by_syk.netupdown.widget.FloatTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tv_speed"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/color_bg"
-    android:paddingLeft="4dp"
-    android:paddingRight="4dp"
-    android:paddingTop="2dp"
-    android:paddingBottom="2dp"
-    android:text="@string/app_name"
-    android:textColor="@color/color_text"
-    android:textSize="@dimen/text_size" />
+    android:background="@color/color_bg">
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_option_speed"
+        android:text="@string/option_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textColor="@color/color_text"
+        android:textSize="@dimen/text_size" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_option_flow"
+        android:text="@string/option_flow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_option_speed"
+        android:layout_toEndOf="@id/tv_option_speed"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textColor="@color/color_text"
+        android:textSize="@dimen/text_size" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_option_close"
+        android:text="@string/option_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:layout_toRightOf="@id/tv_option_flow"
+        android:layout_toEndOf="@id/tv_option_flow"
+        android:textColor="@color/color_text"
+        android:textSize="@dimen/text_size" />
+
+    <com.by_syk.netupdown.widget.FloatTextView
+        android:id="@+id/tv_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:text="@string/app_name"
+        android:textColor="@color/color_text"
+        android:textSize="@dimen/text_size" />
+
+</RelativeLayout>
