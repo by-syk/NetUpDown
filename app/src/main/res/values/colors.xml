@@ -19,5 +19,6 @@
 
     <color name="color_bg">#55000000</color>
     <color name="color_text">#ffffff</color>
+    <color name="color_text_close">#dddddd</color>
 
 </resources>

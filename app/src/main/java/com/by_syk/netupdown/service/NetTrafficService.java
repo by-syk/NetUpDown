@@ -231,6 +231,7 @@ public class NetTrafficService extends Service {
         netTrafficSpider.setRefreshPeriod(1500);
         netTrafficSpider.setCallback(new NetTrafficSpider.Callback() {
             private String text;
+            private boolean flow_mode_tick = false;
 
             @Override
             public void beforeStart() {}
@@ -251,6 +252,7 @@ public class NetTrafficService extends Service {
 //                            + ExtraUtil.getReadableNetSpeed(netSpeedDown);
                 } else {
                     text = ExtraUtil.getReadableBytes(usedBytes);
+                    text += (flow_mode_tick = !flow_mode_tick) ? "." : " ";
                 }
                 tvSpeed.post(new Runnable() {
                     @Override

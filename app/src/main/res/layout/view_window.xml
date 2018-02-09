@@ -60,7 +60,7 @@
         android:paddingBottom="2dp"
         android:layout_toRightOf="@id/tv_option_flow"
         android:layout_toEndOf="@id/tv_option_flow"
-        android:textColor="@color/color_text"
+        android:textColor="@color/color_text_close"
         android:textSize="@dimen/text_size" />
 
     <com.by_syk.netupdown.widget.FloatTextView
