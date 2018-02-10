@@ -1,5 +1,5 @@
-v1.2.0
-
+v1.2.0 2018-02-10
+- Append dynamic dot text on FLOW mode.
 
 v1.1.9 2017-12-01
 - Option menu is provided to switch SPEED/FLOW mode.
