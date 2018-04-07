@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.3"
+    compileSdkVersion 27
 
     defaultConfig {
         applicationId "com.by_syk.netupdown"
@@ -31,9 +30,4 @@ dependencies {
 
     compile 'com.github.by-syk:SP:1.0.9'
 //    compile 'com.github.by-syk:GlobalToast:1.2.2'
-
-    // Xposed
-    // It is very important that you use provided instead of compile!
-//    provided 'de.robv.android.xposed:api:82'
-    //provided 'de.robv.android.xposed:api:82:sources'
 }
